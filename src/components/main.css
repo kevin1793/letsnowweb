@@ -1,20 +1,73 @@
+@font-face {
+  font-family: FontReg;
+  src: url(./../assets/fonts/NotoSansJP-Regular.ttf);
+}
+
+@font-face {
+  font-family: FontBold;
+  src: url(./../assets/fonts/NotoSansJP-Bold.ttf);
+}
+
 .mainWrapper{
+  font-family: FontReg;
   width: 100%;
   justify-content: center;
   margin: 0 auto;
-  max-width: 800px;
-
+  max-width: 600px;
+  color:#fff;
 }
 .postCont{
-  /* width:100%; */
-  /* background-color: white; */
-  display: block;
-  margin: 0 auto;
+  width:100%;
+  display: flex;
+}
+.postCol{
+  width: 100%;
+}
+.avatar{
+  border-radius: 50%;
+  color: white;
+}
+.postBox{
+  display: flex;
+  border-bottom:1px solid #fff;
+  padding-bottom: 5px;
+  margin-bottom: 5px;;
 }
 .postCont textarea{
+  padding:10px;
+  font-size: 14px;
   display: block;
-  width: 100%;
+  width: 95%;
   background-color: #4f6367;;
   border: solid 1px white;
   color: white;
+  margin-bottom:10px;
+  border-radius: 5px;
+}
+.postButton{
+  cursor: pointer;
+  border-radius: 20px;
+  margin: 0 auto;
+  background:#FFF;
+  padding:8px 20px;
+  border: none;
+  margin-bottom:20px;
+  margin-top:10px;
+  font-weight: bold;
+}
+
+.postCont textarea::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+}
+
+.avatarCol{
+  width: 50px;
+}
+
+.userInfoLine{
+  display: flex;
+}
+.userText{
+  font-weight: bold;
+  margin-right: 10px;;
 }

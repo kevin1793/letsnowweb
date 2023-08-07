@@ -1,0 +1,23 @@
+.signInModal{
+  padding:15px;
+  position: absolute;
+  height:500px;
+  width:350px;
+  text-align: center;
+  top:20%;
+  border-radius: 5%;
+  background-color: white;
+  display: block;
+}
+.signInModal .title{
+  text-align: center;
+}
+.signInModal input{
+  margin:0 auto;
+}
+.signInModal button{
+  display: block;
+  margin:0 auto;
+  margin-top:30px;
+  
+}

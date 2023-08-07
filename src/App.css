@@ -1,8 +1,19 @@
+@font-face {
+  font-family: FontReg;
+  src: url(./assets/fonts/NotoSansJP-Regular.ttf);
+}
+
+@font-face {
+  font-family: FontBold;
+  src: url(./assets/fonts/NotoSansJP-Bold.ttf);
+}
 .appWrapper{
-  background: #4f6367;
+  font-family: FontReg;
+  background: #020419;
   width: 100%;
   height: 100vh;
   /* justify-content: center; */
+  position: relative;
 }
 
 .wrapper{

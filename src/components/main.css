@@ -1,0 +1,20 @@
+.mainWrapper{
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 800px;
+
+}
+.postCont{
+  /* width:100%; */
+  /* background-color: white; */
+  display: block;
+  margin: 0 auto;
+}
+.postCont textarea{
+  display: block;
+  width: 100%;
+  background-color: #4f6367;;
+  border: solid 1px white;
+  color: white;
+}

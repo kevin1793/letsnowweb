@@ -22,7 +22,6 @@ const Main = ({onSendMessage}) => {
       const data = await getDocs(postsCollectionRef);
       setPosts(data.docs.map((doc) => ({...doc.data(),id:doc.id})));
       console.log(posts);
-
     }
     getPosts();
   },[])

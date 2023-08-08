@@ -1,13 +1,25 @@
+@font-face {
+  font-family: FontReg;
+  src: url(./../assets/fonts/NotoSansJP-Regular.ttf);
+}
+
+@font-face {
+  font-family: FontBold;
+  src: url(./../assets/fonts/NotoSansJP-Bold.ttf);
+}
+
 .signInModal{
+  font-family: FontReg;
   padding:15px;
   position: absolute;
-  height:500px;
   width:350px;
   text-align: center;
   top:20%;
   border-radius: 5%;
   background-color: white;
   display: block;
+  padding-bottom: 50px;
+
 }
 .signInModal .title{
   text-align: center;
@@ -20,4 +32,36 @@
   margin:0 auto;
   margin-top:30px;
   
+}
+.title{
+  font-size: 20px;;
+  font-weight: bold;
+}
+.label{
+  margin-top:15px;
+  margin-bottom: 5px;;
+}
+.signInModal button{
+  cursor: pointer;
+  border-radius: 20px;
+  margin: 0 auto;
+  background:#020419;
+  padding:8px 20px;
+  border: none;
+  margin-bottom:20px;
+  margin-top:10px;
+  font-weight: bold;
+  color: white;
+  margin-top:25px;
+}
+input{
+  padding:6px 10px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  box-shadow: inset 0px;
+}
+
+.cancel{
+  margin-top:5px;
+  text-decoration: underline;
 }

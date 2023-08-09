@@ -1,0 +1,83 @@
+@font-face {
+  font-family: FontReg;
+  src: url(./../assets/fonts/NotoSansJP-Regular.ttf);
+}
+
+@font-face {
+  font-family: FontBold;
+  src: url(./../assets/fonts/NotoSansJP-Bold.ttf);
+}
+
+#sidebarWrapper{
+  font-family: FontReg;
+  max-width: 150px;
+  width: 100%;
+  padding-left:15px;
+  padding-right:15px;
+  margin-left: auto;
+}
+#sidebarCont{
+  width: 100%;
+  justify-content: right;
+}
+
+#sideOptionHome{
+  
+}
+.contOption{
+  display: flex;
+  margin-bottom:15px;
+  cursor: pointer;
+}
+
+.selectedContOption p{
+  margin:8px 10px;
+}
+.unSelectedContOption p{
+  margin:8px 10px;
+}
+
+.unSelectedContOption svg{
+  margin-top:8px;
+  margin-left: 5px;
+}
+
+.selectedContOption svg{
+  margin-top:8px;
+  margin-left: 5px;
+}
+
+.selectedOption{
+  background: white;
+  border-radius: 10px;
+  
+}
+.selectedContOption{
+  display: flex;
+  margin-bottom:15px;
+  cursor: pointer;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid white;
+  max-width: 200px;
+  width: 100%;
+}
+.unSelectedContOption{
+  display: flex;
+  margin-bottom:15px;
+  cursor: pointer;
+  color:white;
+  border-radius: 5px;
+  border: 1px solid white;
+  max-width: 200px;
+  width: 100%;
+}
+.unselectedOption{
+  color: white;
+}
+
+@media (width:500px){
+  .selectedContainerOption{
+    max-width: 100px;
+  }
+}

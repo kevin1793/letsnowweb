@@ -10,9 +10,7 @@ const Register = ({onSendMessageToRegister}) => {
   console.log('Register Recieved...',onSendMessageToRegister)
   const usersCollectionRef = collection(db,"users");
   const closeModal = () => {
-    const type = 'registerToggle';
-    console.log('from sifgnin');
-    onSendMessageToRegister('toggleRegister'); // Call the callback function with the message
+    onSendMessageToRegister('closeModal'); // Call the callback function with the message
   };
 
   const openRegister = () => {
@@ -36,7 +34,6 @@ const Register = ({onSendMessageToRegister}) => {
         console.error('Error adding user data:', error.message);
       }
     } catch (error) {
-      // Handle signup error
       console.error(error.message);
     }
   }
@@ -56,10 +53,6 @@ const Register = ({onSendMessageToRegister}) => {
     signUp.zip = document.getElementById('zip').value;
     signUp.pass1 = document.getElementById('password1').value;
     signUp.pass2 = document.getElementById('password2').value;
-
-
-    // signUpSuccess();
-    // return;
 
     var error = '';
     const regexEmail = new RegExp(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/gm);

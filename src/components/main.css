@@ -7,7 +7,6 @@
   font-family: FontBold;
   src: url(./../assets/fonts/NotoSansJP-Bold.ttf);
 }
-
 .mainWrapper{
   font-family: FontReg;
   width: 100%;
@@ -15,10 +14,34 @@
   margin: 0 auto;
   max-width: 600px;
   color:#fff;
+  padding-left:10px;
+  padding-right:10px;
+  position: relative;
+}
+#refresh{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: fixed;
+  border: 1px solid #333;
+  background-color: white;
+  z-index: 0;
+  text-align: center;
+  box-shadow: 2px 2px 2px #222;
+  cursor: pointer;
+  bottom: 100px;
+  left: 47%;
+  right: 47%;
+}
+#refresh svg{
+  margin-top: 5px;
+  font-size: 30px;;
+  color: #222;
 }
 .postCont{
   width:100%;
   display: flex;
+  
 }
 .postCol{
   width: 100%;
@@ -29,20 +52,54 @@
 }
 .postBox{
   display: flex;
-  border-bottom:1px solid #fff;
+  border-top:1px solid #fff;
   padding-bottom: 5px;
   margin-bottom: 5px;;
+  padding-top: 15px;;
+  padding-bottom: 20px;;
 }
-.postCont textarea{
+.optionalBoxes{
+  display: flex;
+  justify-content: space-between;
+}
+.mainWrapper input{
   padding:10px;
   font-size: 14px;
   display: block;
-  width: 95%;
   background-color: #4f6367;;
   border: solid 1px white;
   color: white;
   margin-bottom:10px;
   border-radius: 5px;
+  width: 100%;
+}
+#occasionBox{
+  margin-right:5px;
+}
+.postDateTime{
+  margin-left: auto;
+  font-size:10px;
+}
+#locationBox{
+  margin-left:5px;
+}
+.postCont textarea,input{
+  padding:10px;
+  font-size: 14px;
+  background-color: #4f6367;;
+  border: solid 1px white;
+  color: white;
+  margin-bottom:10px;
+  border-radius: 5px;
+  
+}
+textarea{
+  max-width: 600px;;
+  width: 100%;
+  box-sizing: border-box;
+}
+input::placeholder,textarea::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
 }
 .postButton{
   cursor: pointer;
@@ -54,10 +111,15 @@
   margin-bottom:20px;
   margin-top:10px;
   font-weight: bold;
+  display: block;
+  text-align: left;
+  margin-right: auto;
+  color: #222;
 }
 
-.postCont textarea::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: white;
+.whereText{
+  padding-top:5px;
+  font-weight: 600;;
 }
 
 .avatarCol{
@@ -66,8 +128,27 @@
 
 .userInfoLine{
   display: flex;
+  margin-bottom:5px;
 }
 .userText{
   font-weight: bold;
   margin-right: 10px;;
+}
+.notSignedInText{
+  text-align: center;
+  padding-bottom: 30px;
+
+}
+
+@media (max-width:800px){
+  .postCol{
+    font-size: 12px;;
+  }
+  .avatarCol {
+    width: 30px;
+  }
+  #refresh{
+    left: 45%;
+    right: 45%;
+  }
 }

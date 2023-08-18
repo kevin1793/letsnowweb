@@ -9,6 +9,8 @@
 }
 
 #sidebarWrapper{
+  position: relative;
+
   font-family: FontReg;
   max-width: 150px;
   width: 100%;
@@ -36,7 +38,9 @@
 .unSelectedContOption p{
   margin:8px 10px;
 }
-
+#Logout{
+  margin-top: 50px;
+}
 .unSelectedContOption svg{
   margin-top:8px;
   margin-left: 5px;
@@ -46,7 +50,10 @@
   margin-top:8px;
   margin-left: 5px;
 }
-
+.unSelectedContOption:hover{
+  background: #999;
+  transition: background .5s;
+}
 .selectedOption{
   background: white;
   border-radius: 10px;
@@ -75,9 +82,51 @@
 .unselectedOption{
   color: white;
 }
+.optionBox p{
+  font-size: 11px;
+}
 
-@media (width:500px){
+@media (width:800px){
   .selectedContainerOption{
     max-width: 100px;
+  }
+}
+
+@media (max-width:800px){
+  #sidebarCont{
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    width: 100%;
+    background-color: #020419;
+    bottom:0;
+    justify-content: center;
+  }
+  #sidebarCont .optionBox{
+    max-width: 100px;
+    display: block;
+    text-align: center;
+    margin-left: 5px;;
+    margin-right: 5px;;
+    margin-top:1px;
+  }
+  #sidebarCont p{
+    margin-bottom: 10px;
+  }
+  .unSelectedContOption svg{
+    margin:0;
+  }
+  .unSelectedContOption p {
+    margin-top:0px;
+}
+.selectedContOption p{
+  margin-top:0px;
+}
+  .optionBox svg{
+    margin-top:10px;
+  }
+  #sidebarWrapper{
+    max-width: 100%;
+    padding: 0;
   }
 }

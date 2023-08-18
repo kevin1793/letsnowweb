@@ -1,4 +1,7 @@
 #infoWrapper{
-  width:200px;
-  padding:15px;
+  max-width:150px;
+  width: 100%;
+  background-color: white;
+  /* padding:15px; */
+  margin-right: auto;
 }

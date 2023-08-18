@@ -1,27 +1,26 @@
 import React, {useState,useRef} from "react";
 import "./sidebar.css";
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
-function Sidebar(){
-  const [activeIndex, setActiveIndex] = useState('Home');
-  function optionClicked(e){
-    console.log(e.currentTarget);
-    if(e.currentTarget.className.includes('unSelectedContOption')){
-      setActiveIndex(e.currentTarget.id)
-    }
-  }
+const Sidebar = ({onSendMessageToSidebar}) => {
+  const registerModal = () => {
+    onSendMessageToSidebar('register'); // Call the callback function with the message
+  };
+  const signInModal = () => {
+    onSendMessageToSidebar('signIn'); // Call the callback function with the message
+  };
 
   return(
     <div id="sidebarWrapper">
       <div id="sidebarCont">
-        <div id="Home" className={`${activeIndex == 'Home' ? "selectedContOption" : "unSelectedContOption"}`}  onClick={(e) => optionClicked(e)}>
-          <HomeIcon  className={`${activeIndex == 'Home' ? "selectedOption" : "unselectedOption"}`} id='sideOptionHome'/>
-          <p>Home</p>
+        <div id="" className='unSelectedContOption optionBox'  onClick={signInModal}>
+          <LoginIcon  className='unselectedOption' id='sideOptionHome'/>
+          <p>Sign In</p>
         </div>
-        <div id="Profile"  className={`${activeIndex == 'Profile' ? "selectedContOption" : "unSelectedContOption"}`} onClick={(e) => optionClicked(e)}>
-          <PersonIcon className={`${activeIndex == 'Profile' ? "selectedOption" : "unselectedOption"}`} id='sideOptionProfile'/>
-          <p>Profile</p>
+        <div id=""  className='unSelectedContOption optionBox'  onClick={registerModal}>
+          <PersonAddIcon className='unselectedOption' id='sideOptionProfile'/>
+          <p>Register</p>
         </div>
       </div>
     </div>

@@ -4,21 +4,12 @@ import {signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
 
 const Signin = ({onSendMessageToSignin}) => {
-  // const [messageFromChild, setMessageFromChild] = useState('');
-  console.log('Signin Recieved...',onSendMessageToSignin)
-
   const closeModal = () => {
-    const type = 'signinToggle';
-    console.log('from sifgnin');
-    onSendMessageToSignin('toggleSignin'); // Call the callback function with the message
+    onSendMessageToSignin('close'); // Call the callback function with the message
   };
-
   const openRegister = () => {
-    const type = 'openRegister';
-    console.log('from sifgnin');
     onSendMessageToSignin('openRegister'); // Call the callback function with the message
   };
-
   async function signIn(){
     var email = document.getElementById('signInEmail').value;
     var pass = document.getElementById('signInPassword').value;
@@ -36,20 +27,16 @@ const Signin = ({onSendMessageToSignin}) => {
       errorHTML.innerHTML = error;
       return;
     }
-
     try {
       await signInWithEmailAndPassword(auth,email,pass);
-      console.log('signed in');
       localStorage.setItem('email',email);
       localStorage.setItem('signedIn',true);
       onSendMessageToSignin('signedIn');
     } catch (error) {
-      console.log('error signing in',error);
       var errorHTML = document.getElementById('errorText');
       errorHTML.innerHTML = 'Sign in failed.';
     }
   }
-
 
   return (
   <div className='signInModal'>
@@ -64,7 +51,7 @@ const Signin = ({onSendMessageToSignin}) => {
     <input id="signInPassword" type="password" placeholder="Password"></input>
     <button onClick={signIn}>Sign In</button>
     <div className="cancel" onClick={closeModal}>Cancel</div>
-    <div className="cancel" onClick={openRegister}>Sign Up</div>
+    <div className="cancel" onClick={openRegister}>Register</div>
   </div>
 );
 }

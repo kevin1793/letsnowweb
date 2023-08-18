@@ -7,7 +7,6 @@ import {db} from './../firebase-config';
 const auth = getAuth();
 
 const Register = ({onSendMessageToRegister}) => {
-  console.log('Register Recieved...',onSendMessageToRegister)
   const usersCollectionRef = collection(db,"users");
   const closeModal = () => {
     onSendMessageToRegister('closeModal'); // Call the callback function with the message
@@ -18,41 +17,47 @@ const Register = ({onSendMessageToRegister}) => {
   };
 
   async function signUpUser(signUp){
-    console.log('signUpUser',signUp);
     try {
       await createUserWithEmailAndPassword(auth, signUp.email, signUp.pass1);
-      // User signed up successfully
       try {
         await setDoc(doc(usersCollectionRef, signUp.email), {
           email: signUp.email,
           username: signUp.user,
+          displayname: signUp.displayname,
           zip: signUp.zip,
         });
   
         signUpSuccess();
       } catch (error) {
-        console.error('Error adding user data:', error.message);
+        var errorHTML = document.getElementById('errorText');
+        errorHTML.innerHTML = 'Sign Up failed.';
       }
     } catch (error) {
-      console.error(error.message);
+      var errorHTML = document.getElementById('errorText');
+      errorHTML.innerHTML = 'Sign Up failed.';
     }
   }
 
   function signUpSuccess(){
     var successHTML = document.getElementById('signUpSuccess');
     var signUpFormHTML = document.getElementById('signUpForm');
-    console.log(successHTML.style.display = 'block');
+    successHTML.style.display = 'block';
+    signUpFormHTML.style.display = 'none';
+
+    var signUpFormHTML = document.getElementById('signUpForm');
     successHTML.style.display = 'block';
     signUpFormHTML.style.display = 'none';
   }
 
   function signUpClicked(){
+    console.log(adjectives[21]);
     var signUp = {user:'',email:'',pass1:'',pass2:''};
     signUp.user = document.getElementById('username').value;
     signUp.email = document.getElementById('email').value;
     signUp.zip = document.getElementById('zip').value;
     signUp.pass1 = document.getElementById('password1').value;
     signUp.pass2 = document.getElementById('password2').value;
+    signUp.displayname =  adjectives[Math.floor(Math.random() * 98)]+'-'+nouns[Math.floor(Math.random() * 98)]+'-'+Math.floor(Math.random() * 99);
 
     var error = '';
     const regexEmail = new RegExp(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/gm);
@@ -74,18 +79,199 @@ const Register = ({onSendMessageToRegister}) => {
       errorHTML.innerHTML = error;
       return;
     }
-    
     signUpUser(signUp);
-    console.log(signUp);
   }
 
+  var adjectives = [
+    "Silly",
+    "Wacky",
+    "Whimsical",
+    "Bizarre",
+    "Quirky",
+    "Goofy",
+    "Zany",
+    "Absurd",
+    "Ridiculous",
+    "Hilarious",
+    "Funky",
+    "Offbeat",
+    "Amusing",
+    "Oddball",
+    "Eccentric",
+    "Cheeky",
+    "Fanciful",
+    "Curious",
+    "Ludicrous",
+    "Outlandish",
+    "Mirthful",
+    "Witty",
+    "Playful",
+    "Jovial",
+    "Flamboyant",
+    "Unconventional",
+    "Merry",
+    "Lighthearted",
+    "Clownish",
+    "Whacky",
+    "Gleeful",
+    "Droll",
+    "Kooky",
+    "Bubbling",
+    "Nonsensical",
+    "Witty",
+    "Zesty",
+    "Giggly",
+    "Chuckling",
+    "Zippy",
+    "Peculiar",
+    "Hysterical",
+    "Zippy",
+    "Spirited",
+    "Comical",
+    "Far-out",
+    "Laughable",
+    "Mirthful",
+    "Zestful",
+    "Playful",
+    "Frolicsome",
+    "Amusing",
+    "Entertaining",
+    "Belly-laugh",
+    "Bouncy",
+    "Daffy",
+    "Jocular",
+    "Merrymaking",
+    "Off-the-wall",
+    "Side-splitting",
+    "Snazzy",
+    "Whimsy",
+    "Zesty",
+    "Giggle-inducing",
+    "Grinning",
+    "Mirth-making",
+    "Perky",
+    "Puckish",
+    "Risible",
+    "Smile-worthy",
+    "Spirited",
+    "Tee-hee",
+    "Unusual",
+    "Zappy",
+    "Mirthful",
+    "Screwball",
+    "Silly",
+    "Zany",
+    "Giddy",
+    "Droll",
+    "Joking",
+    "Quizzical",
+    "Teasing",
+    "Uproarious",
+    "Whimsy",
+    "Zippy",
+    "Laughing",
+    "Mirthful",
+    "Lively",
+    "Zestful"
+  ];
+  var nouns = [
+    "Whisker",
+    "Socks",
+    "Biscuit",
+    "Pickle",
+    "Muffin",
+    "Waffle",
+    "Narwhal",
+    "Flamingo",
+    "Pancake",
+    "Pajamas",
+    "Penguin",
+    "Jellybean",
+    "Tornado",
+    "Marshmallow",
+    "Unicorn",
+    "Kangaroo",
+    "Bubble",
+    "Banana",
+    "Jigsaw",
+    "Disco",
+    "Llama",
+    "Zucchini",
+    "Gummy Bear",
+    "Balloon",
+    "Noodle",
+    "Pineapple",
+    "Poodle",
+    "Cupcake",
+    "Giggles",
+    "Hippo",
+    "Snuggle",
+    "Tofu",
+    "Chatterbox",
+    "Squirrel",
+    "Spaghetti",
+    "Gargoyle",
+    "Mustache",
+    "Dragonfly",
+    "Donut",
+    "Cheesecake",
+    "Snickerdoodle",
+    "Bumblebee",
+    "Watermelon",
+    "Lollipop",
+    "Sausage",
+    "Sasquatch",
+    "Flapjack",
+    "Caterpillar",
+    "Piglet",
+    "Fandango",
+    "Mango",
+    "Cactus",
+    "Toothbrush",
+    "Wombat",
+    "Penguin",
+    "Jellybean",
+    "Waffle",
+    "Tornado",
+    "Marshmallow",
+    "Zucchini",
+    "Bumblebee",
+    "Watermelon",
+    "Lollipop",
+    "Sausage",
+    "Giggles",
+    "Tofu",
+    "Cupcake",
+    "Noodle",
+    "Mustache",
+    "Snuggle",
+    "Disco",
+    "Pickle",
+    "Balloon",
+    "Biscuit",
+    "Unicorn",
+    "Pancake",
+    "Pineapple",
+    "Gummy Bear",
+    "Jigsaw",
+    "Waffle",
+    "Hippopotamus",
+    "Pajamas",
+    "Doughnut",
+    "Flamingo",
+    "Penguin",
+    "Sloth",
+    "Zebra",
+    "Snickerdoodle",
+    "Gargoyle"
+  ];
 
   return (
   <div className='signInModal'>
-    
     <div className='title'>
-      Sign Up
+      Register
     </div>
+    <div id="errorText"></div>
     <div id="signUpForm">
       <div id="errorText"></div>
       <div className="label">Email</div>
@@ -106,7 +292,9 @@ const Register = ({onSendMessageToRegister}) => {
     <div className="cancel" onClick={closeModal}>Cancel</div>
     <div className="cancel" onClick={openRegister}>Sign In</div>
   </div>
-);
+  );
+
+  
 }
 
 export default Register

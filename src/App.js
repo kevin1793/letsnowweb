@@ -44,7 +44,7 @@ function App() {
     if(message == 'logout'){
       console.log('logout clicked');
       localStorage.setItem('signedIn',false);
-
+      localStorage.setItem('username','');
       setIsSignedIn(false);
     }
   };
@@ -114,12 +114,12 @@ function App() {
         test
       </div>
       <Navbar/>
-      {isSignedIn == true?
+      {localStorage.getItem('username')?
       <div id='welcomeMessage'>Welcome {localStorage.username}!</div>
       :''}
       <div className='appCont'>
         <div id='desktopSidebar'>
-          {isSignedIn == true?
+          {localStorage.getItem('username')?
           <SidebarSignedIn onSendMessageToSidebar={receiveMessageFromSidebar} />
           :
           <Sidebar onSendMessageToSidebar={receiveMessageFromSidebar} />
@@ -133,7 +133,7 @@ function App() {
         </div>
       </div>
       <div id='mobileSidebar'>
-      {isSignedIn == true?
+      {localStorage.getItem('username')?
         <SidebarSignedIn onSendMessageToSidebar={receiveMessageFromSidebar} />
         :
         <Sidebar onSendMessageToSidebar={receiveMessageFromSidebar} />

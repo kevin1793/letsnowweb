@@ -2,8 +2,11 @@ import React, { useEffect,useState } from "react";
 import "./main.css";
 import PersonIcon from '@mui/icons-material/Person';
 import {db} from './../firebase-config';
-import {collection, getDocs,doc,setDoc, query,limit ,orderBy} from 'firebase/firestore';
+import {collection, getDocs,doc,setDoc,deleteDoc, query,limit ,orderBy} from 'firebase/firestore';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 var init = 0;
 var newData;
@@ -53,15 +56,11 @@ const Main = ({onSendMessage}) => {
       console.log('');
       getPosts();
     }
-    // else if(localStorage.lastUpdate && localStorage.lastUpdate-Date.now()<300000){
-    //   setLocalPosts()
-    // }
     else{
       getPosts();
     }
     init = 1;
   }
-  // },[])
   async function uploadPost(message,occasion,location){
     await setDoc(doc(postsCollectionRef), {
       timestamp:Date.now(),
@@ -103,7 +102,66 @@ const Main = ({onSendMessage}) => {
     }else if(nowMonth == d.getMonth(x) && yesterDate.getDate() == d.getDate(x) && nowYear == d.getFullYear(x)){
       dateString = 'Yesterday';
     }
-    return dateString+' '+(d.getHours(x)>12?d.getHours(x)-12:d.getHours(x))+':'+d.getMinutes(x)+' '+(d.getHours(x)>12?'PM':'AM');
+    return dateString+' '+(d.getHours(x)>12?d.getHours(x)-12:d.getHours(x))+':'+(d.getMinutes(x)<10?'0'+d.getMinutes(x):d.getMinutes(x))+' '+(d.getHours(x)>12?'PM':'AM');
+  }
+
+  async function unLikeClick(e){
+    if(!localStorage.getItem('username')){
+      sendMessageToParent()
+      return;
+    }
+    var updatedPost = e;
+    var newLikes = updatedPost.likes;
+    newLikes.splice(newLikes.indexOf(localStorage.getItem('username')), 1);
+    updatedPost.likes = newLikes;
+    console.log(newLikes);
+    try {
+      await setDoc(doc(postsCollectionRef, e.id), updatedPost);
+      getPosts();
+    } catch (error) {
+    }
+  }
+
+  async function likeClick(e){
+    if(!localStorage.getItem('username')){
+      sendMessageToParent()
+      return;
+    }
+    var updatedPost = e;
+    var newLikes = updatedPost.likes?updatedPost.likes:[];
+    newLikes.push(localStorage.getItem('username'));
+    updatedPost.likes = newLikes;
+    console.log(newLikes);
+    try {
+      await setDoc(doc(postsCollectionRef, e.id), updatedPost);
+      getPosts();
+    } catch (error) {
+    }
+  }
+
+  function openLink(e){
+    console.log('open link',e);
+    window.open('https://www.google.com/search?q='+(e.location?e.location:''),'_blank')
+  }
+
+  function toggleDeletePost(post){
+    console.log(localStorage);
+    if(localStorage.getItem('deletePost').length && localStorage.getItem('deletePost') != post.id){
+      localStorage.setItem('deletePost',post.id);
+    }else if(localStorage.getItem('deletePost').length && localStorage.getItem('deletePost') == post.id){
+      localStorage.setItem('deletePost','');
+    }else{
+      localStorage.setItem('deletePost',post.id);
+    }
+    setState(state+1);
+  }
+
+  async function deletePost(post){
+    try {
+      await deleteDoc(doc(postsCollectionRef, post.id));
+      getPosts();
+    } catch (error) {
+    }
   }
 
   return(
@@ -112,7 +170,7 @@ const Main = ({onSendMessage}) => {
         <RefreshIcon/>
       </div>
       {
-        signedIn == 'true' ?
+        localStorage.getItem('username') ?
         <div className="postCont">
           <div className="postCol">
             <div><textarea id="postBox" type="text" placeholder="What's happening???"></textarea></div>
@@ -128,30 +186,51 @@ const Main = ({onSendMessage}) => {
       }
       <div className="feedCont">
         {posts.map(post =>(
-          <div  key={post.id} className="postBox">
-            <div className="avatarCol"><PersonIcon className="avatar"/></div>
-            <div className="postCol">
-              <div className="userInfoLine">
-                <div className="userText">{post.displayname}</div>
-                <div className="userIDText">@{post.username}</div>
-                <div className="postDateTime">{formatTimeStamp(post.timestamp)}</div>
+          <div  key={post.id} className="postWrapper">
+            
+            <div className="postBox">
+              <div className="avatarCol"><PersonIcon className="avatar"/></div>
+              <div className="postCol">
+                <div className="userInfoLine">
+                  <div className="userText">{post.displayname}</div>
+                  <div className="userIDText">@{post.username}</div>
+                  <div className="postDateTime">{formatTimeStamp(post.timestamp)}</div>
+                </div>
+                <div>{post.message}</div>
+                {post.occasion && post.location?
+                <div className="whereText" onClick={e=> openLink(post)}>{post.occasion} @ {post.location}</div>
+                :
+                ''
+                }
+                {post.occasion && !post.location?
+                <div className="whereText">{post.occasion}</div>
+                :
+                ''
+                }
+                {!post.occasion && post.location?
+                <div className="whereText"  onClick={e=> openLink(post)}>@ {post.location}</div>
+                :
+                ''
+                }
+                <div className="likeBox">
+                  <div className="likeCount">
+                    {post.likes && post.likes.length?post.likes.length:'0'}
+                  </div>
+                  {post.likes && post.likes.includes(localStorage.getItem('username'))?
+                  <FavoriteIcon onClick={e => unLikeClick(post)} className="likeButton"/>
+                  :
+                  <FavoriteBorderIcon  onClick={e => likeClick(post)}  className="likeButton"/>
+                  }
+                  {post.username == localStorage.getItem('username')?
+                  <div className="postOptions" onClick={e=> toggleDeletePost(post)}><MoreHorizIcon /></div>
+                  :''
+                  }
+                  {localStorage.getItem('deletePost') == post.id && localStorage.getItem('deletePost').length?
+                  <button className="deletePostButton" onClick={e=> deletePost(post)}>DELETE</button>
+                  :''
+                  }
+                </div>
               </div>
-              <div>{post.message}</div>
-              {post.occasion && post.location?
-              <div className="whereText">{post.occasion} @ {post.location}</div>
-              :
-              ''
-              }
-              {post.occasion && !post.location?
-              <div className="whereText">{post.occasion}</div>
-              :
-              ''
-              }
-              {!post.occasion && post.location?
-              <div className="whereText">@ {post.location}</div>
-              :
-              ''
-              }
             </div>
           </div>
         ))}
